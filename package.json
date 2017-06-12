@@ -11,6 +11,10 @@
   ],
   "contributors": [
     {
+      "name" : "Stefan Berger",
+      "email" : "stefan.berger@codefluegel.com"
+    },
+    {
       "name": "Kevin Mehall",
       "email": "km@kevinmehall.net",
       "url": "http://kevinmehall.net"
@@ -27,7 +31,7 @@
   "main": "./usb",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tessel/node-usb.git"
+    "url": "https://github.com/stberger3040/node-usb.git"
   },
   "scripts": {
     "install": "node-pre-gyp install --fallback-to-build",
@@ -38,7 +42,7 @@
   "binary": {
     "module_name": "usb_bindings",
     "module_path": "./src/binding",
-    "host": "https://github.com/tessel/node-usb/releases/download/",
+    "host": "https://github.com/stberger3040/node-usb/releases/download/",
     "remote_path": "{version}"
   },
   "dependencies": {
