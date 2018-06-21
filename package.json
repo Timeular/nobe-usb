@@ -31,7 +31,7 @@
   "main": "./usb",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stberger3040/node-usb.git"
+    "url": "https://github.com/Timeular/nobe-usb.git"
   },
   "scripts": {
     "install": "node-pre-gyp install --fallback-to-build",
@@ -42,7 +42,7 @@
   "binary": {
     "module_name": "usb_bindings",
     "module_path": "./src/binding",
-    "host": "https://github.com/stberger3040/node-usb/releases/download/",
+    "host": "https://github.com/Timeular/nobe-usb/releases/download/",
     "remote_path": "{version}"
   },
   "dependencies": {

@@ -1117,12 +1117,23 @@ static int get_device_port_and_state(struct libusb_context *ctx, HDEVINFO *dev_i
 		return LIBUSB_ERROR_ACCESS;
 	}
 
-	// The SPDRP_ADDRESS for USB devices is the device port number on the hub
+	// After a recent windows 10 update the SPDRP_ADDRESS of some USB devices are not
+	// reflecting the port number anymore, but rather they are increasing which each
+	// device inserted in this port.
+	// As a work around the port number is obtained by parsing the location information.
+	char location[MAX_KEY_LENGTH+1];
+	location[0] = 0;
 	if (!pSetupDiGetDeviceRegistryPropertyA(*dev_info, dev_info_data,
-		SPDRP_ADDRESS, NULL, (BYTE *)&port, 4, &size) || (size != 4)) {
-		usbi_warn(ctx, "could not retrieve port number for device '%s', skipping: %s",
-			dev_id, windows_error_str(0));
-		return LIBUSB_ERROR_ACCESS;
+		SPDRP_LOCATION_INFORMATION, NULL, (BYTE *)location, MAX_KEY_LENGTH, 0) || 
+		// e.g. Port_#0002.Hub_#0004
+		(sscanf_s(location + 6, "%u", &port) != 1)) {
+		// The SPDRP_ADDRESS for USB devices is the device port number on the hub
+		if (!pSetupDiGetDeviceRegistryPropertyA(*dev_info, dev_info_data,
+			SPDRP_ADDRESS, NULL, (BYTE *)&port, 4, &size) || (size != 4)) {
+			usbi_warn(ctx, "could not retrieve port number for device '%s', skipping: %s",
+				dev_id, windows_error_str(0));
+			return LIBUSB_ERROR_ACCESS;
+		}
 	}
 	*port_number = port;
 
