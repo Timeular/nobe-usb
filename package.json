@@ -34,21 +34,16 @@
     "url": "https://github.com/Timeular/nobe-usb.git"
   },
   "scripts": {
-    "install": "node-pre-gyp install --fallback-to-build",
+    "install": "prebuild-install --force || node-gyp rebuild",
     "test": "mocha --compilers coffee:coffee-script --grep Module",
     "full-test": "mocha --compilers coffee:coffee-script",
     "valgrind": "coffee -c test/usb.coffee; valgrind --leak-check=full --show-possibly-lost=no node --expose-gc --trace-gc node_modules/mocha/bin/_mocha -R spec",
     "ci": "node test/ci.js"
   },
-  "binary": {
-    "module_name": "usb_bindings",
-    "module_path": "./src/binding",
-    "host": "https://github.com/Timeular/nobe-usb/releases/download/",
-    "remote_path": "{version}"
-  },
   "dependencies": {
     "nan": "^2.4.0",
-    "node-pre-gyp": "^0.6.30"
+    "prebuild-install": "^5.0.0",
+    "bindings": "~1.3.0"
   },
   "devDependencies": {
     "coffee-script": "~1.6.2",

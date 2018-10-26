@@ -1,2 +1,2 @@
 
-const binding_path = require('../src/binding/usb_bindings')
+const binding_path = require('../usb')
